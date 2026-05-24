@@ -8,7 +8,7 @@ import type { FolderProps } from 'types/props';
 function Folder({ name, check, checked, checkMode, intoFolder }: FolderProps) {
   const toggleCheck = useCallback(() => {
     check(name);
-  }, []);
+  }, [check, name]);
 
   const longPressBind = useLongPress(!checkMode ? toggleCheck : null, {
     threshold: 400,
@@ -24,7 +24,7 @@ function Folder({ name, check, checked, checkMode, intoFolder }: FolderProps) {
     } else {
       toggleCheck();
     }
-  }, [checkMode]);
+  }, [checkMode, intoFolder, toggleCheck]);
 
   return (
     <div>

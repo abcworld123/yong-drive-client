@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Button } from 'components/buttons';
 import { Downloader } from 'components/utils';
 import { useCheckBoxStore, useHomeStore } from 'hooks/stores';
@@ -8,7 +8,7 @@ import type { DownloadBody } from 'types/apis';
 import type { ClipboardButtonProps } from 'types/props';
 
 export default function DownloadButton({ checkMode }: ClipboardButtonProps) {
-  const [bucket, path] = useHomeStore(state => [state.bucket, state.path], shallow);
+  const [bucket, path] = useHomeStore(useShallow(state => [state.bucket, state.path]));
   const [downloadBody, setDownloadBody] = useState<DownloadBody>(null);
 
   // download

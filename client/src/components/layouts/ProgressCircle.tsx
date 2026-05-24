@@ -1,9 +1,9 @@
 import { Circle } from 'rc-progress';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { useUploadStore } from 'hooks/stores';
 
 export default function ProgressCircle() {
-  const [isUploading, progVal] = useUploadStore(state => [state.isUploading, state.progVal], shallow);
+  const [isUploading, progVal] = useUploadStore(useShallow(state => [state.isUploading, state.progVal]));
 
   return (
     <Circle

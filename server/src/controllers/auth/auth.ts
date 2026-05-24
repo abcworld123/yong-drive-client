@@ -1,10 +1,10 @@
 import { check } from 'services/auth/login';
 
 // all page middleware
-export default function controller(req: Request, res: Response, next: NextFunction) {
+export default async function controller(req: ExpressRequest, res: ExpressResponse, next: ExpressNextFunction) {
   if (req.session.isLogin) next();
   else if (regex.some(x => x.test(req.url))) next();
-  else if (check(req)) next();
+  else if (await check(req)) next();
   else res.status(401).end();
 }
 

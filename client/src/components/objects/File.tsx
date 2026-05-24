@@ -8,7 +8,7 @@ import type { FileProps } from 'types/props';
 function File({ name, check, checked, checkMode, size }: FileProps) {
   const toggleCheck = useCallback(() => {
     check(name);
-  }, []);
+  }, [check, name]);
 
   const longPressBind = useLongPress(!checkMode ? toggleCheck : null, {
     threshold: 400,
@@ -22,7 +22,7 @@ function File({ name, check, checked, checkMode, size }: FileProps) {
     if (checkMode) {
       toggleCheck();
     }
-  }, [checkMode]);
+  }, [checkMode, toggleCheck]);
 
   return (
     <div>

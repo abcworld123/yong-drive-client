@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import Swal from 'sweetalert2';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Button } from 'components/buttons';
 import { useHomeStore } from 'hooks/stores';
 import { CreateFolderIcon } from 'svg/icons';
@@ -10,7 +10,7 @@ import { toastSuccess } from 'utils/toasts';
 import type { CreateFolderBody, ResWithErrMsg } from 'types/apis';
 
 export default function CreateFolderButton() {
-  const [bucket, path, reload] = useHomeStore(state => [state.bucket, state.path, state.reload], shallow);
+  const [bucket, path, reload] = useHomeStore(useShallow(state => [state.bucket, state.path, state.reload]));
 
   // create new folder
   const createFolder = useCallback(async () => {

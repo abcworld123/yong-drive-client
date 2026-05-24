@@ -1,7 +1,7 @@
 import 'animate.css';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Control } from 'components/controls';
 import { Objects } from 'components/objects';
 import { Dnd } from 'components/utils';
@@ -15,7 +15,7 @@ import type { GetBody, ResObjectList } from 'types/apis';
 import type { HomeProps, HomeServerSideContext } from 'types/props';
 
 const Home: NextPage<HomeProps> = ({ bucket, path }) => {
-  const [chkSet, chkAll] = useCheckBoxStore(state => [state.chkSet, state.chkAll], shallow);
+  const [chkSet, chkAll] = useCheckBoxStore(useShallow(state => [state.chkSet, state.chkAll]));
   const uploadObject = useUploadStore(state => state.uploadObject);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -24,7 +24,7 @@ const Home: NextPage<HomeProps> = ({ bucket, path }) => {
     const { bucket, path } = useHomeStore.getState();
     const nxtPath = `/${bucket}/${path}${folder}`;
     router.push(nxtPath);
-  }, []);
+  }, [router]);
 
   const checkHandler = useCallback((name: string) => {
     const chkSet = useCheckBoxStore.getState().chkSet;
@@ -54,11 +54,11 @@ const Home: NextPage<HomeProps> = ({ bucket, path }) => {
   useEffect(() => {
     useHomeStore.setState({ bucket, path });
     reload();
-  }, [bucket, path]);
+  }, [bucket, path, reload]);
 
   useEffect(() => {
     useHomeStore.setState({ reload });
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     const names = useHomeStore.getState().objects.map(x => x.name);

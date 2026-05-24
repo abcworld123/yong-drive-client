@@ -21,7 +21,7 @@ function Objects({ check, intoFolder }: ObjectProps) {
           checked={chkSet.has(name)}
           checkMode={checkMode}
           intoFolder={intoFolder}
-        />
+        />,
       );
     } else {
       arr.push(
@@ -32,7 +32,7 @@ function Objects({ check, intoFolder }: ObjectProps) {
           checked={chkSet.has(name)}
           checkMode={checkMode}
           size={convUnit(size)}
-        />
+        />,
       );
     }
   });

@@ -8,29 +8,38 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
-        node: ['18', '20']
+        node: ['24']
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: latest
 
       - name: Test node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
+          cache: 'pnpm'
+          cache-dependency-path: |
+            client/pnpm-lock.yaml
+            server/pnpm-lock.yaml
 
       - name: Install packages
         run: |
-          npm ci --prefix ./client
-          npm ci --prefix ./server
+          pnpm --dir ./client install --frozen-lockfile
+          pnpm --dir ./server install --frozen-lockfile
 
       - name: Check production build
-        run: npm run build --prefix ./client
+        run: pnpm --dir ./client run build
 
       # - name: Run test
-      #   run: npm test --prefix ./server
+      #   run: pnpm --dir ./server test
       #   env:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

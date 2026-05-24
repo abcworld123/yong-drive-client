@@ -1,12 +1,12 @@
 import { memo } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Button } from 'components/buttons';
 import { useLayoutStore } from 'hooks/stores';
 import styles from 'styles/Layouts.module.scss';
 import type { DropdownProps } from 'types/props';
 
 function Dropdown({ id, icon, text, items, className, disabled, responsive }: DropdownProps) {
-  const [opened, dropdownClick] = useLayoutStore(state => [state.dropdown, state.dropdownClick], shallow);
+  const [opened, dropdownClick] = useLayoutStore(useShallow(state => [state.dropdown, state.dropdownClick]));
 
   return (
     <div>

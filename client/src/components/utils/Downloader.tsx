@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import type { DownloaderProps } from 'types/props';
 
 export default function Downloader({ body }: DownloaderProps) {
-  const downloader = useRef<HTMLFormElement>();
+  const downloader = useRef<HTMLFormElement | null>(null);
   const { bucket, path, filenames } = body || {};
 
   useEffect(() => {
-    if (body) downloader.current.submit();
+    if (body) downloader.current?.submit();
   }, [body]);
 
   return (

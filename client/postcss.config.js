@@ -1,7 +1,8 @@
-module.exports = {
-  plugins: {
-    'tailwindcss': {},
-    'autoprefixer': { overrideBrowserslist: 'last 2 version' },
-    'postcss-fail-on-warn': {},
-  },
+const config = {
+  plugins: [
+    '@tailwindcss/postcss',
+    'postcss-fail-on-warn',
+  ],
 };
+
+export default config;

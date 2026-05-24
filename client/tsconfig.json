@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -10,17 +14,29 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": "./src",
+    "jsx": "react-jsx",
     "paths": {
-      "svg/*": ["./components/assets/svg/*"],
-      "@backend/types/*": ["../../server/src/types/*"],
-    }
+      "svg/*": [
+        "./src/components/assets/svg/*"
+      ],
+      "@backend/types/*": [
+        "../server/src/types/*"
+      ],
+      "*": [
+        "./src/*"
+      ]
+    },
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

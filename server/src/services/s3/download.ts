@@ -38,7 +38,7 @@ export async function* downloadRecursiveCmd({ bucket, baseSrc, path, filenames }
         if (!success) throw new Error();
         yield { success: true, body, filename };
       }
-    } catch (err) {
+    } catch {
       yield { success: false };
     }
   }

@@ -1,0 +1,6 @@
+allowBuilds:
+  '@parcel/watcher': true
+  sharp: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - sweetalert2@11.26.25

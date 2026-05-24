@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Button } from 'components/buttons';
 import { useCheckBoxStore, useHomeStore } from 'hooks/stores';
 import { DeleteIcon } from 'svg/icons';
@@ -10,7 +10,7 @@ import type { DeleteBody, ResDefault } from 'types/apis';
 import type { ClipboardButtonProps } from 'types/props';
 
 export default function DeleteButton({ checkMode }: ClipboardButtonProps) {
-  const [bucket, path, reload] = useHomeStore(state => [state.bucket, state.path, state.reload], shallow);
+  const [bucket, path, reload] = useHomeStore(useShallow(state => [state.bucket, state.path, state.reload]));
 
   // delete
   const deleteObject = useCallback(async () => {

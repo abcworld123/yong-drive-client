@@ -1,9 +1,9 @@
-import archiver from 'archiver';
+import { ZipArchive } from '@archiver/archiver';
 import { downloadFileCmd, downloadRecursiveCmd, getObjectListCmd } from 'services/s3';
 import type { DownloadBody, DownloadSingleParams, ReqDownload } from 'types/apis';
 
 // download single file
-async function sendSingleFile(res: Response, params: DownloadSingleParams) {
+async function sendSingleFile(res: ExpressResponse, params: DownloadSingleParams) {
   const { body, size } = await downloadFileCmd(params);
   if (!body) res.end();
   else {
@@ -14,7 +14,7 @@ async function sendSingleFile(res: Response, params: DownloadSingleParams) {
 }
 
 // download single folder as zip
-async function sendSingleFolder(res: Response, params: DownloadSingleParams, zipName: string) {
+async function sendSingleFolder(res: ExpressResponse, params: DownloadSingleParams, zipName: string) {
   const { bucket, path, filename } = params;
   const { success, objects } = await getObjectListCmd({ bucket, path: path + filename });
   if (!success) res.status(500).end();
@@ -25,9 +25,9 @@ async function sendSingleFolder(res: Response, params: DownloadSingleParams, zip
 }
 
 // download multiple objects as zip
-async function sendZip(res: Response, params: DownloadBody, zipName: string) {
+async function sendZip(res: ExpressResponse, params: DownloadBody, zipName: string) {
   const { bucket, path, filenames } = params;
-  const zip = archiver('zip', { zlib: { level: 1 } });
+  const zip = new ZipArchive({ zlib: { level: 1 } });
   res.setHeader('Content-Disposition', `attachment; filename="${zipName}.zip"`);
   res.setHeader('Content-Type', 'application/zip');
   zip.pipe(res);
@@ -42,7 +42,7 @@ async function sendZip(res: Response, params: DownloadBody, zipName: string) {
   zip.finalize();
 }
 
-export default async function controller(req: Request<ReqDownload>, res: Response, next: NextFunction) {
+export default async function controller(req: ExpressRequest<ReqDownload>, res: ExpressResponse, next: ExpressNextFunction) {
   const { bucket, path } = req.body;
   const filenames: string[] = JSON.parse(req.body.filenames);
 

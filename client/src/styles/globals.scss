@@ -1,14 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-// overwrite tailwind preflight
-@layer base {
-  button, [type='button'], [type='reset'], [type='submit'] {
-    @apply bg-[#e0e0ea];
-  }
-}
-
 // swal toast
 .swal2-toast {
   &.swal2-icon-success {

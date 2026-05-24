@@ -2,22 +2,24 @@
   "ts-node": {
     "transpileOnly": true,
   },
+  "include": ["src"],
   "compilerOptions": {
     "target": "esnext",
     "strict": false,
-    "moduleResolution": "node",
+    "types": ["jest"],
+    "moduleResolution": "bundler",
+    "rootDir": "./src",
     "noEmit": true,
     "skipLibCheck": true,
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    "baseUrl": "./src",
     "paths": {
-      "config": ["./config/config.ts"],
+      "config": ["./src/config/config.ts"],
       "@frontend/types/*": ["../../client/src/types/*"],
+      "*": ["./src/*"],
     },
   },
 }

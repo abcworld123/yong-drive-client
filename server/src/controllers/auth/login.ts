@@ -5,11 +5,11 @@ import getCid from 'utils/cidGenerator';
 import type { ReqLogin } from 'types/apis';
 
 // login page
-export default async function controller(req: Request<ReqLogin>, res: Response, next: NextFunction) {
+export default async function controller(req: ExpressRequest<ReqLogin>, res: ExpressResponse, next: ExpressNextFunction) {
   const { pw } = req.body;
   if (compareSync(pw, config.auth.pw)) {
     const cid = getCid();
-    await redisClient.v4.setEx(cid, maxAge, '');
+    await redisClient.setEx(cid, maxAge, '');
     res.cookie('cid', cid, { maxAge: maxAge * 1000 });
     res.json({ success: true });
   } else {

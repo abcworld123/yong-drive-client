@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 import { Dropdown } from 'components/buttons';
 import { useHomeStore, useUploadStore } from 'hooks/stores';
 import { UploadIcon } from 'svg/icons';
@@ -11,8 +11,8 @@ import type { ResDefault, UploadParams } from 'types/apis';
 import type { DropdownItem } from 'types/props';
 
 export default function UploadButton() {
-  const [bucket, path, reload] = useHomeStore(state => [state.bucket, state.path, state.reload], shallow);
-  const [setIsUploading, setProgVal] = useUploadStore(state => [state.setIsUploading, state.setProgVal], shallow);
+  const [bucket, path, reload] = useHomeStore(useShallow(state => [state.bucket, state.path, state.reload]));
+  const [setIsUploading, setProgVal] = useUploadStore(useShallow(state => [state.setIsUploading, state.setProgVal]));
   const inputFile = useRef<HTMLInputElement>(null);
   const inputFolder = useRef<HTMLInputElement>(null);
 
@@ -25,7 +25,7 @@ export default function UploadButton() {
     try {
       for (const file of files) {
         let filepath: string = file['path'] || file.webkitRelativePath || file.name;
-        if (filepath[0] === '/') filepath = filepath.slice(1);
+        filepath = filepath.replace(/^\.?\//, '');
         const params: UploadParams = {
           bucket: bucket,
           path: path,
@@ -48,9 +48,10 @@ export default function UploadButton() {
       alertError(err.message);
       console.error(err);
     } finally {
+      setIsUploading(false);
       inputFile.current.value = inputFile.current.defaultValue;
     }
-  }, [bucket, reload, path]);
+  }, [bucket, reload, path, setIsUploading, setProgVal]);
 
   const isMobile = useMemo(() => {
     return 'ontouchstart' in document.documentElement;
@@ -61,7 +62,7 @@ export default function UploadButton() {
     const folderUpload = { name: '폴더 업로드', action: () => inputFolder.current.click() };
     if (!isMobile) return [fileUpload, folderUpload];
     else return [fileUpload];
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     useUploadStore.setState({ uploadObject: upload });

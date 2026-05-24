@@ -1,3 +1,4 @@
+import 'styles/tailwind.css';
 import 'styles/globals.scss';
 import { SHA256 } from 'crypto-js';
 import Head from 'next/head';
@@ -26,8 +27,8 @@ function App({ Component, pageProps }: AppProps) {
       showLoaderOnConfirm: true,
       allowOutsideClick: shakeOutsideClick,
       preConfirm: async (pw: string) => {
+        if (!pw.trim()) { Swal.showValidationMessage('비밀번호를 입력해주세요.'); return; }
         pw = SHA256(pw.trim()).toString();
-        if (!pw) Swal.showValidationMessage('비밀번호를 입력해주세요.');
         const { data } = await api.post<ResLogin>('/auth/login', { pw });
         if (!data.success) Swal.showValidationMessage('비밀번호가 일치하지 않습니다.');
         else useSessionStore.setState({ isLogin: true });
@@ -41,26 +42,29 @@ function App({ Component, pageProps }: AppProps) {
       useSessionStore.setState({ isLogin: data.success });
     } catch (err) {
       alertError(err.message);
+      useSessionStore.setState({ isLogin: false });
     }
   }, []);
 
   useEffect(() => {
     check();
-  }, []);
+  }, [check]);
 
   useEffect(() => {
     if (isLogin === false) {
       login();
     }
-  }, [isLogin]);
+  }, [isLogin, login]);
 
   useEffect(() => {
-    document.addEventListener('click', ({ target }: MouseEvent) => {
+    const handler = ({ target }: MouseEvent) => {
       if (target instanceof HTMLElement && !target.classList.contains('btn-dropdown')) {
         dropdownClick(null);
       }
-    });
-  }, []);
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [dropdownClick]);
 
   return (
     <>
