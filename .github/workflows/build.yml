@@ -26,20 +26,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'pnpm'
-          cache-dependency-path: |
-            client/pnpm-lock.yaml
-            server/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install packages
         run: |
-          pnpm --dir ./client install --frozen-lockfile
-          pnpm --dir ./server install --frozen-lockfile
+          pnpm install --frozen-lockfile
 
       - name: Check production build
-        run: pnpm --dir ./client run build
-
-      # - name: Run test
-      #   run: pnpm --dir ./server test
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: pnpm run build
