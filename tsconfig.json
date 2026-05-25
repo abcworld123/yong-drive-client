@@ -22,9 +22,6 @@
       "svg/*": [
         "./src/components/assets/svg/*"
       ],
-      "@backend/types/*": [
-        "../server/src/types/*"
-      ],
       "*": [
         "./src/*"
       ]

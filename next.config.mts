@@ -6,6 +6,9 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   // reactStrictMode: true,
+  experimental: {
+    proxyClientMaxBodySize: '4gb',
+  },
   turbopack: {
     resolveAlias: {
       svg: path.resolve(dirname, './components/assets/svg'),

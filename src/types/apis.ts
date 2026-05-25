@@ -1,5 +1,3 @@
-import type { Bucket } from '@aws-sdk/client-s3';
-
 // get params, post body types
 export interface LoginBody {
   pw: string;
@@ -136,4 +134,11 @@ export interface ObjectInfo {
   type: string;
   name: string;
   size?: number;
+}
+
+export interface Bucket {
+    Name?: string | undefined;
+    CreationDate?: Date | undefined;
+    BucketRegion?: string | undefined;
+    BucketArn?: string | undefined;
 }
