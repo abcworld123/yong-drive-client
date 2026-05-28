@@ -1,5 +1,5 @@
 {
-  "name": "yong-drive",
+  "name": "yong-drive-client",
   "version": "0.9.0",
   "private": true,
   "type": "module",
@@ -23,7 +23,7 @@
     "sharp": "0.34.5",
     "sweetalert2": "11.26.25",
     "use-long-press": "3.3.0",
-    "zustand": "5.0.13"
+    "zustand": "5.0.14"
   },
   "devDependencies": {
     "@next/env": "16.2.6",
@@ -34,7 +34,7 @@
     "@types/node": "25.9.1",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
-    "@typescript-eslint/eslint-plugin": "8.59.4",
+    "@typescript-eslint/eslint-plugin": "8.60.0",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
     "eslint-import-resolver-typescript": "4.4.4",
