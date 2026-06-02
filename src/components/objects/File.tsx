@@ -1,11 +1,58 @@
 import { memo, useCallback } from 'react';
+import type { ComponentType } from 'react';
 import { LongPressEventType, useLongPress } from 'use-long-press';
 import { CheckBox } from 'components/buttons';
 import styles from 'styles/Layouts.module.scss';
-import { FIleIcon } from 'svg/icons';
+import {
+  FileIcon, TextFileIcon, ImageFileIcon, VideoFileIcon, AudioFileIcon,
+  PdfFileIcon, WordFileIcon, ExcelFileIcon, PptFileIcon,
+  ArchiveFileIcon, CodeFileIcon, FontFileIcon, DatabaseFileIcon,
+} from 'svg/icons';
 import type { FileProps } from 'types/props';
 
+const EXT_ICON_MAP: Record<string, ComponentType> = {
+  // Image
+  jpg: ImageFileIcon, jpeg: ImageFileIcon, png: ImageFileIcon, gif: ImageFileIcon,
+  bmp: ImageFileIcon, webp: ImageFileIcon, svg: ImageFileIcon, ico: ImageFileIcon,
+  tiff: ImageFileIcon, tif: ImageFileIcon, avif: ImageFileIcon, heic: ImageFileIcon, heif: ImageFileIcon,
+  // Video
+  mp4: VideoFileIcon, avi: VideoFileIcon, mov: VideoFileIcon, mkv: VideoFileIcon,
+  webm: VideoFileIcon, wmv: VideoFileIcon, flv: VideoFileIcon, m4v: VideoFileIcon, ogv: VideoFileIcon,
+  // Audio
+  mp3: AudioFileIcon, wav: AudioFileIcon, flac: AudioFileIcon, aac: AudioFileIcon,
+  ogg: AudioFileIcon, m4a: AudioFileIcon, wma: AudioFileIcon, opus: AudioFileIcon,
+  // PDF
+  pdf: PdfFileIcon,
+  // Word / Document
+  doc: WordFileIcon, docx: WordFileIcon, odt: WordFileIcon, rtf: WordFileIcon,
+  // Excel / Spreadsheet
+  xls: ExcelFileIcon, xlsx: ExcelFileIcon, csv: ExcelFileIcon, ods: ExcelFileIcon,
+  // PowerPoint / Presentation
+  ppt: PptFileIcon, pptx: PptFileIcon, odp: PptFileIcon,
+  // Archive
+  zip: ArchiveFileIcon, tar: ArchiveFileIcon, gz: ArchiveFileIcon, rar: ArchiveFileIcon,
+  '7z': ArchiveFileIcon, bz2: ArchiveFileIcon, xz: ArchiveFileIcon, zst: ArchiveFileIcon,
+  // Code / Text
+  js: CodeFileIcon, ts: CodeFileIcon, jsx: CodeFileIcon, tsx: CodeFileIcon,
+  py: CodeFileIcon, java: CodeFileIcon, cpp: CodeFileIcon, c: CodeFileIcon,
+  cs: CodeFileIcon, go: CodeFileIcon, rs: CodeFileIcon, rb: CodeFileIcon,
+  php: CodeFileIcon, html: CodeFileIcon, css: CodeFileIcon, scss: CodeFileIcon,
+  json: CodeFileIcon, xml: CodeFileIcon, yaml: CodeFileIcon, yml: CodeFileIcon,
+  sh: CodeFileIcon, bash: CodeFileIcon,
+  // Plain text
+  txt: TextFileIcon, md: TextFileIcon,
+  sql: CodeFileIcon, toml: CodeFileIcon, ini: CodeFileIcon,
+  // Font
+  ttf: FontFileIcon, otf: FontFileIcon, woff: FontFileIcon, woff2: FontFileIcon, eot: FontFileIcon,
+  // Database
+  db: DatabaseFileIcon, sqlite: DatabaseFileIcon, sqlite3: DatabaseFileIcon,
+  mdb: DatabaseFileIcon, accdb: DatabaseFileIcon,
+};
+
 function File({ name, check, checked, checkMode, size }: FileProps) {
+  const ext = name.split('.').pop()?.toLowerCase() ?? '';
+  const IconComponent = EXT_ICON_MAP[ext] ?? FileIcon;
+
   const toggleCheck = useCallback(() => {
     check(name);
   }, [check, name]);
@@ -29,7 +76,7 @@ function File({ name, check, checked, checkMode, size }: FileProps) {
       <div className={`${styles.objectIcon} ${checked ? styles.checkedObjectIcon : ''} cursor-pointer`} onClick={e => clickFile(e.target)}>
         <CheckBox checked={checked} toggleCheck={toggleCheck} />
         <div {...longPressBind()} className="grid place-items-center">
-          <FIleIcon />
+          <IconComponent />
         </div>
       </div>
       <div title={name} className={`${styles.objectName} mt-5`}>
