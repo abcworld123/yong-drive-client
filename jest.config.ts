@@ -10,7 +10,7 @@ const config: Config = {
   rootDir: './src',
   modulePaths: ['<rootDir>'],
   moduleNameMapper: {
-    's3/(.*)$': '<rootDir>/services/s3/$1.ts',
+    '(.*)$': '<rootDir>/services/$1.ts',
   },
   testRegex: '.*\\.test\\.ts$',
   transform: {

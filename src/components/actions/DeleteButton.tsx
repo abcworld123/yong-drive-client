@@ -27,7 +27,7 @@ export default function DeleteButton({ checkMode }: ClipboardButtonProps) {
       objects: [...chkSet],
     };
     try {
-      const { data } = await api.post<ResDefault>('/s3/object/delete', body);
+      const { data } = await api.post<ResDefault>('/object/delete', body);
       if (!data.success) throw new Error('삭제 오류');
       toastSuccess('삭제 완료!');
       reload();

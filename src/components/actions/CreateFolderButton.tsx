@@ -22,7 +22,7 @@ export default function CreateFolderButton() {
       foldername: value,
     };
     try {
-      const { data } = await api.post<ResWithErrMsg>('/s3/object/create', body);
+      const { data } = await api.post<ResWithErrMsg>('/object/create', body);
       if (!data.success) {
         if (data.errMsg) throw new Error(data.errMsg);
         else throw new Error('폴더 생성 오류');

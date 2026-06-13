@@ -20,7 +20,7 @@ export default function PasteButton() {
     };
     try {
       const msg = mode === 'copy' ? '복사' : '이동';
-      const { data } = await api.post<ResDefault>('/s3/object/paste', body);
+      const { data } = await api.post<ResDefault>('/object/paste', body);
       if (!data.success) throw new Error(`${msg} 오류`);
       toastSuccess(`${msg} 완료!`);
       reload();

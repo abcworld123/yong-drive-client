@@ -3,7 +3,8 @@ import { useSessionStore } from 'hooks/stores';
 import { alertError } from './alerts';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '/api',
+  withCredentials: true,
 });
 
 api.interceptors.response.use((response) => response, (error: AxiosError) => {

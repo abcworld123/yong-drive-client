@@ -16,7 +16,7 @@ const BucketSelectPage: NextPage = () => {
   }, [router]);
 
   const reload = useCallback(async () => {
-    const { data } = await api.post<ResBucketList>('/s3/bucket/get');
+    const { data } = await api.post<ResBucketList>('/bucket/get');
     if (data.success) {
       const arr: React.ReactElement[] = [];
       data.buckets.forEach(({ Name: name }) => {

@@ -31,7 +31,7 @@ export default function UploadButton() {
           path: path,
           filename: filepath,
         };
-        const { data } = await api.post<ResDefault>('/s3/object/upload', file, {
+        const { data } = await api.post<ResDefault>('/object/upload', file, {
           params,
           headers: { 'Content-Type': 'multipart/form-data' },
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {

@@ -40,7 +40,7 @@ const Home: NextPage<HomeProps> = ({ bucket, path }) => {
     useCheckBoxStore.setState({ chkSet: new Set() });
     const body: GetBody = { bucket, path };
     try {
-      const { data } = await api.post<ResObjectList>('/s3/object/get', body);
+      const { data } = await api.post<ResObjectList>('/object/get', body);
       if (!data.success) throw new Error('서버 오류가 발생했습니다.');
       useHomeStore.setState({ bucket, path, objects: data.objects });
       useCheckBoxStore.setState({ chkAll: false });
